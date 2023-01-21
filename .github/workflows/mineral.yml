@@ -17,7 +17,7 @@ jobs:
           repository: 'LalatinaHub/Mineral'
       - name: Get secrets
         run: |
-          echo ${{ secrets.BOT_TOKEN }} > ./session
+          echo ${{ secrets.SESSION }} > ./session
           echo ${{ secrets.API_ID }} > ./api_id
           echo ${{ secrets.API_HASH }} > ./api_hash
       - name: Use Node.js 18
