@@ -3,7 +3,7 @@ name: Mineral
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */8 * * *"
+    - cron: "0 */6 * * *"
 
 jobs:
   fishing:
@@ -28,12 +28,13 @@ jobs:
       - name: Start Mineral
         run: |
           npm install && npx tsc && node ./app/index.js
-      - name: Publish Result
-        if: ${{ success() }}
-        uses: EndBug/add-and-commit@v9
+      - name: Push file
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          add: '["./result"]'
-          default_author: github_actions
-          fetch: false
-          tag_push: "--force"
-          message: "Update Subscriptions"
+          source_file: 'result/'
+          destination_repo: 'LalatinaHub/Mineral'
+          user_email: 'santrialanwari@gmail.com'
+          user_name: 'Dicky Mulia Fiqri'
+          commit_message: 'Update Nodes'
