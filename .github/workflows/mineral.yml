@@ -3,7 +3,7 @@ name: Mineral
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "0 */3 * * *"
 
 jobs:
   fishing:
@@ -13,8 +13,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          repository: 'LalatinaHub/Mineral'
       - name: Get secrets
         run: |
           echo ${{ secrets.SESSION }} > ./session
@@ -28,14 +26,7 @@ jobs:
       - name: Start Mineral
         run: |
           npm install && npx tsc && node ./app/index.js
-      - name: Push file
-        uses: dmnemec/copy_file_to_another_repo_action@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      - name: Commit & Push changes
+        uses: actions-js/push@master
         with:
-          source_file: 'result/'
-          destination_repo: 'LalatinaHub/Mineral'
-          destination_branch: 'master'
-          user_email: 'santrialanwari@gmail.com'
-          user_name: 'Dicky Mulia Fiqri'
-          commit_message: 'Update Nodes'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
