@@ -8,6 +8,8 @@ on:
 jobs:
   fishing:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     concurrency:
       group: mineral
 
